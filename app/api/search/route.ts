@@ -1,0 +1,5 @@
+import { NextResponse } from "next/server";
+import { runSearch } from "@/lib/providers";
+import { searchSchema } from "@/lib/validation";
+const requests = new Map<string, { count:number; reset:number }>();
+export async function POST(request:Request){try{const ip=request.headers.get("x-forwarded-for")?.split(",")[0]?.trim()||"unknown";const now=Date.now(),windowMs=Number(process.env.RATE_LIMIT_WINDOW_SECONDS||60)*1000,max=Number(process.env.RATE_LIMIT_MAX_REQUESTS||30);const current=requests.get(ip);if(!current||current.reset<=now)requests.set(ip,{count:1,reset:now+windowMs});else if(current.count>=max)return NextResponse.json({error:"Rate limit exceeded; try again shortly."},{status:429});else current.count++;const body=await request.json();const parsed=searchSchema.safeParse(body);if(!parsed.success)return NextResponse.json({error:"Invalid search input"}, {status:400});const findings=await runSearch(parsed.data.type,parsed.data.query);return NextResponse.json({query:parsed.data.query,type:parsed.data.type,findings});}catch{return NextResponse.json({error:"Search could not be completed safely"}, {status:500});}}

@@ -1,0 +1,14 @@
+# dependencies and framework output
+node_modules/
+.next/
+out/
+
+# local environment configuration
+.env
+.env.local
+.env*.local
+
+# diagnostic files
+*.log
+*.tsbuildinfo
+.DS_Store

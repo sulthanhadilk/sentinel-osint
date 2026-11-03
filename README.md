@@ -40,9 +40,9 @@ Saved investigations use browser `localStorage` by design. The Vercel deployment
 
 ## Modes and sources
 
-DNS lookups use the operating system resolver and require internet access for live domains. Phone and IP classification are offline/local. RDAP and Certificate Transparency are represented as attributable public links so operators can manually verify them without Sentinel silently scraping or fabricating unavailable results. Public source availability and rate limits can change.
+DNS lookups use the operating system resolver and require internet access for live domains. Phone and IP classification are offline/local. RDAP and Certificate Transparency are represented as public links so operators can review returned data without Sentinel silently scraping or fabricating unavailable results. Public source availability and rate limits can change.
 
-The current UI intentionally does not claim that a profile, mailbox, person, or location is confirmed from a matching identifier. Providers implement the `Finding` contract in `lib/types.ts` and are registered in `lib/providers.ts`.
+The current UI presents returned public-source data and links for review. Providers implement the `Finding` contract in `lib/types.ts` and are registered in `lib/providers.ts`.
 
 ## Expanded provider roadmap
 
@@ -52,4 +52,4 @@ For an authenticated multi-user deployment, Supabase is supported as an optional
 
 ## Privacy and security
 
-Queries are sent to the local Next.js server for analysis. Do not enter credentials, secrets, private leaked data, or sensitive personal data. Network requests are bounded and unsafe URL destinations are rejected. The app sets defensive security headers and never automatically opens suspicious URLs. This is a research aid, not proof of identity.
+Queries are sent to the local Next.js server for analysis. Do not enter credentials, secrets, private leaked data, or sensitive personal data. Network requests are bounded and unsafe URL destinations are rejected. The app sets defensive security headers and never automatically opens suspicious URLs. This is a public-source research aid.

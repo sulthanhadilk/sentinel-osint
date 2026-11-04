@@ -4,7 +4,8 @@ import type { Finding, SearchType } from "./types";
 const stamp=()=>new Date().toISOString();
 const item=(provider:string,title:string,summary:string,status:Finding["status"],mode:Finding["mode"],sourceUrl?:string,data?:unknown):Finding=>({provider,title,summary,status,mode,sourceUrl,retrievedAt:stamp(),data});
 async function json(url:string){
-  const timeout=Number(process.env.PROVIDER_TIMEOUT_MS||10000);
+  const configuredTimeout=Number(process.env.PROVIDER_TIMEOUT_MS||5000);
+  const timeout=Math.min(Math.max(configuredTimeout,1000),5000);
   const response=await fetch(url,{headers:{accept:"application/json","user-agent":"Sentinel-OSINT public research"},signal:AbortSignal.timeout(timeout)});
   if(!response.ok)throw Error(`Source returned ${response.status}`);
   return response.json();

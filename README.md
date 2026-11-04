@@ -40,7 +40,7 @@ Saved investigations use browser `localStorage` by design. The Vercel deployment
 
 ## Modes and sources
 
-DNS lookups use the operating system resolver and require internet access for live domains. Phone and IP classification are offline/local. RDAP and Certificate Transparency are represented as public links so operators can review returned data without Sentinel silently scraping or fabricating unavailable results. Public source availability and rate limits can change.
+DNS lookups use the operating system resolver and require internet access for live domains. Phone and IP classification are offline/local. RDAP and Certificate Transparency use bounded public requests and retain source links for review; Certificate Transparency falls back to Cert Spotter when crt.sh is unavailable. Public source availability and rate limits can change.
 
 The current UI presents returned public-source data and links for review. Providers implement the `Finding` contract in `lib/types.ts` and are registered in `lib/providers.ts`.
 
